@@ -99,7 +99,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("BBox Length: {}, BBoxes:{:#?}", bboxes.len(), bboxes);
 
     //We want to change input_image since it is not needed.
-    let mut output_image = input_image.to_rgba();
+    let mut output_image = input_image.into_rgba8();
 
     //Iterate through all bounding boxes
     for bbox in bboxes {
