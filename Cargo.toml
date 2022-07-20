@@ -1,5 +1,5 @@
 [package]
-name = "mtcnn"
+name = "rustmtcnn"
 version = "0.1.1"
 edition = "2018"
 
@@ -9,3 +9,4 @@ image = "~0.24.1"
 imageproc = "~0.23.0"
 structopt = "~0.2.15"
 openssl-sys = "0.9.75"
+opencv = "0.66.0"
