@@ -1,5 +1,4 @@
 use std::error::Error;
-
 use tensorflow::{Graph, ImportGraphDefOptions, Session, SessionOptions, SessionRunArgs, Tensor};
 
 use std::path::PathBuf;
@@ -8,6 +7,7 @@ use structopt::StructOpt;
 use image::{Rgba, GenericImageView};
 use imageproc::drawing::draw_hollow_rect_mut;
 use imageproc::rect::Rect;
+use opencv::{self as cv, prelude::*};
 
 #[derive(StructOpt)]
 struct Opt {

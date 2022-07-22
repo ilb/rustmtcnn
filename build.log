@@ -1,0 +1,944 @@
+STEP 1/24: FROM rust:1.62
+STEP 2/24: ARG DEBUG
+--> Using cache cdaed560305918899d65c5e43fc0d5cbbb06be5a675132de59b01807a55df81a
+--> cdaed560305
+STEP 3/24: ENV TARGET=${DEBUG:+debug}
+--> Using cache 0a97443949d93eb63f0f28b2e245e6bf0f74f47dc16c97df52574b86bc11d5b3
+--> 0a97443949d
+STEP 4/24: ENV TARGET=${TARGET:-release}
+--> Using cache e85cb593ea1e5b37b655334b70cbe5057b1dd29a9926daa60b707cafc72dbca2
+--> e85cb593ea1
+STEP 5/24: ENV PROFILE=${DEBUG:+dev}
+--> Using cache 7045f96c6124f7b7ebf725456608dd422854e23941b33f0b957060714592210c
+--> 7045f96c612
+STEP 6/24: ENV PROFILE=${PROFILE:-release}
+--> Using cache 10bd5c46055dbf1eea54733ac76e15d90459b20744e0aea27ef5bb12f4bcb47f
+--> 10bd5c46055
+STEP 7/24: RUN echo "TARGET=$TARGET PROFILE=$PROFILE"
+--> Using cache 9338ca778d35c07f0a07c6c9e04c77eeb8968a939796b651c66b5ba907dd6def
+--> 9338ca778d3
+STEP 8/24: COPY ./build ./build
+--> Using cache 0b57207a943db74dd7d4a6e5c2c12dcad00fae4c56a297de3b8d749d0040b88e
+--> 0b57207a943
+STEP 9/24: RUN build/dependencies.sh
+--> Using cache 732d90713493d03ef7eb233edacde9953ff6b8984c03b13409ff1b39dbff3b06
+--> 732d9071349
+STEP 10/24: RUN USER=root cargo new --bin rustmtcnn
+--> Using cache 37b55d0de812b499c748fe4f36143807377ec1fdd52e455838449bd6d847863b
+--> 37b55d0de81
+STEP 11/24: WORKDIR /rustmtcnn
+--> Using cache 3dd1ec1185ca6d993bb58fe3b484b3b4e82425ec14baab7d27233510c87074c9
+--> 3dd1ec1185c
+STEP 12/24: COPY ./Cargo.lock ./Cargo.lock
+--> Using cache fbca4202ac4aaea9b3b573947b29c0398e197947f2167578b7fc1daa32123aa7
+--> fbca4202ac4
+STEP 13/24: COPY ./Cargo.toml ./Cargo.toml
+--> Using cache 21c370d8cbfaaeca2078369908b1cd2e08f977ce42fc4a5b6ccd73771f20b69c
+--> 21c370d8cbf
+STEP 14/24: RUN env RUST_BACKTRACE=full cargo build -vv --profile $PROFILE
+[libc 0.2.126] cargo:rerun-if-changed=build.rs
+[proc-macro2 1.0.40] cargo:rerun-if-changed=build.rs
+[libc 0.2.126] cargo:rustc-cfg=freebsd11
+[libc 0.2.126] cargo:rustc-cfg=libc_priv_mod_use
+[libc 0.2.126] cargo:rustc-cfg=libc_union
+[libc 0.2.126] cargo:rustc-cfg=libc_const_size_of
+[libc 0.2.126] cargo:rustc-cfg=libc_align
+[libc 0.2.126] cargo:rustc-cfg=libc_int128
+[libc 0.2.126] cargo:rustc-cfg=libc_core_cvoid
+[libc 0.2.126] cargo:rustc-cfg=libc_packedN
+[libc 0.2.126] cargo:rustc-cfg=libc_cfg_target_vendor
+[libc 0.2.126] cargo:rustc-cfg=libc_non_exhaustive
+[libc 0.2.126] cargo:rustc-cfg=libc_ptr_addr_of
+[libc 0.2.126] cargo:rustc-cfg=libc_underscore_const_names
+[proc-macro2 1.0.40] cargo:rustc-cfg=use_proc_macro
+[proc-macro2 1.0.40] cargo:rustc-cfg=wrap_proc_macro
+[quote 1.0.20] cargo:rerun-if-changed=build.rs
+[crossbeam-utils 0.8.10] cargo:rerun-if-changed=no_atomic.rs
+[crc32fast 1.3.2] cargo:rerun-if-changed=build.rs
+[syn 1.0.98] cargo:rustc-cfg=syn_disable_nightly_tests
+[rayon-core 1.9.3] cargo:rerun-if-changed=build.rs
+[crc32fast 1.3.2] cargo:rustc-cfg=crc32fast_stdarchx86
+[memchr 2.5.0] cargo:rustc-cfg=memchr_runtime_simd
+[memchr 2.5.0] cargo:rustc-cfg=memchr_runtime_sse2
+[memchr 2.5.0] cargo:rustc-cfg=memchr_runtime_sse42
+[memchr 2.5.0] cargo:rustc-cfg=memchr_runtime_avx
+[proc-macro2 0.4.30] cargo:rerun-if-changed=build.rs
+[proc-macro2 0.4.30] cargo:rustc-cfg=u128
+[proc-macro2 0.4.30] cargo:rustc-cfg=use_proc_macro
+[proc-macro2 0.4.30] cargo:rustc-cfg=wrap_proc_macro
+[futures-core 0.3.21] cargo:rerun-if-changed=no_atomic_cas.rs
+[typenum 1.15.0] cargo:rustc-env=TYPENUM_BUILD_CONSTS=/rustmtcnn/target/debug/build/typenum-b6be89a333a8e2e8/out/consts.rs
+[typenum 1.15.0] cargo:rustc-env=TYPENUM_BUILD_OP=/rustmtcnn/target/debug/build/typenum-b6be89a333a8e2e8/out/op.rs
+[syn 0.15.44] cargo:rustc-cfg=syn_can_match_trailing_dollar
+[syn 0.15.44] cargo:rustc-cfg=syn_can_use_thread_id
+[syn 0.15.44] cargo:rustc-cfg=syn_can_use_associated_constants
+[syn 0.15.44] cargo:rustc-cfg=syn_can_call_macro_by_path
+[syn 0.15.44] cargo:rustc-cfg=syn_disable_nightly_tests
+[num-traits 0.2.15] cargo:rustc-cfg=has_i128
+[num-traits 0.2.15] cargo:rustc-cfg=has_to_int_unchecked
+[num-traits 0.2.15] cargo:rustc-cfg=has_reverse_bits
+[num-traits 0.2.15] cargo:rustc-cfg=has_leading_trailing_ones
+[num-integer 0.1.45] cargo:rustc-cfg=has_i128
+[num-integer 0.1.45] cargo:rerun-if-changed=build.rs
+[memoffset 0.6.5] cargo:rustc-cfg=tuple_ty
+[memoffset 0.6.5] cargo:rustc-cfg=allow_clippy
+[memoffset 0.6.5] cargo:rustc-cfg=maybe_uninit
+[memoffset 0.6.5] cargo:rustc-cfg=doctests
+[memoffset 0.6.5] cargo:rustc-cfg=raw_ref_macros
+[num-traits 0.2.15] cargo:rustc-cfg=has_int_assignop_ref
+[num-traits 0.2.15] cargo:rustc-cfg=has_div_euclid
+[crossbeam-epoch 0.9.9] cargo:rustc-cfg=crossbeam_const_fn_trait_bound
+[crossbeam-epoch 0.9.9] cargo:rerun-if-changed=no_atomic.rs
+[lock_api 0.4.7] cargo:rustc-cfg=has_const_fn_trait_bound
+[num-bigint 0.4.3] cargo:rustc-cfg=u64_digit
+[num-traits 0.2.15] cargo:rustc-cfg=has_copysign
+[num-traits 0.2.15] cargo:rerun-if-changed=build.rs
+[num-rational 0.4.1] cargo:rustc-cfg=has_int_exp_fmt
+[num-rational 0.4.1] cargo:rerun-if-changed=build.rs
+[num-bigint 0.4.3] cargo:rustc-cfg=has_try_from
+[rayon 1.5.3] cargo:rustc-cfg=has_step_by_rev
+[num-bigint 0.4.3] cargo:rustc-cfg=use_addcarry
+[num-bigint 0.4.3] cargo:rerun-if-changed=build.rs
+[rayon 1.5.3] cargo:rustc-cfg=has_min_const_generics
+[rayon 1.5.3] cargo:rustc-cfg=has_control_flow
+[num-iter 0.1.43] cargo:rustc-cfg=has_i128
+[num-iter 0.1.43] cargo:rustc-cfg=rustc_1_28
+[num-iter 0.1.43] cargo:rerun-if-changed=build.rs
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=LIBZ_SYS_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-changed=build.rs
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_NO_PKG_CONFIG
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_DYNAMIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=SYSROOT
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_DYNAMIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[libz-sys 1.1.8] cargo:rustc-link-lib=z
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=ZLIB_DYNAMIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[libz-sys 1.1.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rustc-cfg=const_fn
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_GNU_OPENSSL_LIB_DIR
+[openssl-sys 0.9.75] X86_64_UNKNOWN_LINUX_GNU_OPENSSL_LIB_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_LIB_DIR
+[openssl-sys 0.9.75] OPENSSL_LIB_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_GNU_OPENSSL_INCLUDE_DIR
+[openssl-sys 0.9.75] X86_64_UNKNOWN_LINUX_GNU_OPENSSL_INCLUDE_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_INCLUDE_DIR
+[openssl-sys 0.9.75] OPENSSL_INCLUDE_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=X86_64_UNKNOWN_LINUX_GNU_OPENSSL_DIR
+[openssl-sys 0.9.75] X86_64_UNKNOWN_LINUX_GNU_OPENSSL_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_DIR
+[openssl-sys 0.9.75] OPENSSL_DIR unset
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_NO_PKG_CONFIG
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=SYSROOT
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rustc-link-lib=ssl
+[openssl-sys 0.9.75] cargo:rustc-link-lib=crypto
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=OPENSSL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[openssl-sys 0.9.75] cargo:rerun-if-changed=build/expando.c
+[openssl-sys 0.9.75] OPT_LEVEL = Some("0")
+[openssl-sys 0.9.75] TARGET = Some("x86_64-unknown-linux-gnu")
+[openssl-sys 0.9.75] HOST = Some("x86_64-unknown-linux-gnu")
+[openssl-sys 0.9.75] CC_x86_64-unknown-linux-gnu = None
+[openssl-sys 0.9.75] CC_x86_64_unknown_linux_gnu = None
+[openssl-sys 0.9.75] HOST_CC = None
+[openssl-sys 0.9.75] CC = None
+[openssl-sys 0.9.75] CFLAGS_x86_64-unknown-linux-gnu = None
+[openssl-sys 0.9.75] CFLAGS_x86_64_unknown_linux_gnu = None
+[openssl-sys 0.9.75] HOST_CFLAGS = None
+[openssl-sys 0.9.75] CFLAGS = None
+[openssl-sys 0.9.75] CRATE_CC_NO_DEFAULTS = None
+[openssl-sys 0.9.75] DEBUG = Some("true")
+[openssl-sys 0.9.75] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[openssl-sys 0.9.75] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/include" "-Wall" "-Wextra" "-E" "build/expando.c"
+[openssl-sys 0.9.75] exit status: 0
+[openssl-sys 0.9.75] cargo:rustc-cfg=osslconf="OPENSSL_NO_SSL3_METHOD"
+[openssl-sys 0.9.75] cargo:conf=OPENSSL_NO_SSL3_METHOD
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl101
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl102
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl102f
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl102h
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl110
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl110f
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl110g
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl110h
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl111
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl111b
+[openssl-sys 0.9.75] cargo:rustc-cfg=ossl111c
+[openssl-sys 0.9.75] cargo:version_number=101010ef
+[openssl-sys 0.9.75] cargo:version=111
+[openssl-sys 0.9.75] cargo:include=/usr/include
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=BZIP2_NO_PKG_CONFIG
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=BZIP2_STATIC
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=BZIP2_DYNAMIC
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[bzip2-sys 0.1.11+1.0.8] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[bzip2-sys 0.1.11+1.0.8] TARGET = Some("x86_64-unknown-linux-gnu")
+[bzip2-sys 0.1.11+1.0.8] OPT_LEVEL = Some("0")
+[bzip2-sys 0.1.11+1.0.8] HOST = Some("x86_64-unknown-linux-gnu")
+[bzip2-sys 0.1.11+1.0.8] CC_x86_64-unknown-linux-gnu = None
+[bzip2-sys 0.1.11+1.0.8] CC_x86_64_unknown_linux_gnu = None
+[bzip2-sys 0.1.11+1.0.8] HOST_CC = None
+[bzip2-sys 0.1.11+1.0.8] CC = None
+[bzip2-sys 0.1.11+1.0.8] CFLAGS_x86_64-unknown-linux-gnu = None
+[bzip2-sys 0.1.11+1.0.8] CFLAGS_x86_64_unknown_linux_gnu = None
+[bzip2-sys 0.1.11+1.0.8] HOST_CFLAGS = None
+[bzip2-sys 0.1.11+1.0.8] CFLAGS = None
+[bzip2-sys 0.1.11+1.0.8] CRATE_CC_NO_DEFAULTS = None
+[bzip2-sys 0.1.11+1.0.8] DEBUG = Some("true")
+[bzip2-sys 0.1.11+1.0.8] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/blocksort.o" "-c" "bzip2-1.0.8/blocksort.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-changed=curl
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_NO_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=SYSROOT
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_NO_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=SYSROOT
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rustc-link-search=native=/usr/lib/x86_64-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rustc-link-lib=curl
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=LIBCURL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[curl-sys 0.4.55+curl-7.83.1] cargo:include=/usr/include/x86_64-linux-gnu
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/huffman.o" "-c" "bzip2-1.0.8/huffman.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/crctable.o" "-c" "bzip2-1.0.8/crctable.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/randtable.o" "-c" "bzip2-1.0.8/randtable.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/compress.o" "-c" "bzip2-1.0.8/compress.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/decompress.o" "-c" "bzip2-1.0.8/decompress.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "bzip2-1.0.8" "-D_FILE_OFFSET_BITS=64" "-DBZ_NO_STDIO" "-o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/bzlib.o" "-c" "bzip2-1.0.8/bzlib.c"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] AR_x86_64-unknown-linux-gnu = None
+[bzip2-sys 0.1.11+1.0.8] AR_x86_64_unknown_linux_gnu = None
+[bzip2-sys 0.1.11+1.0.8] HOST_AR = None
+[bzip2-sys 0.1.11+1.0.8] AR = None
+[bzip2-sys 0.1.11+1.0.8] running: "ar" "cq" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/libbz2.a" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/blocksort.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/huffman.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/crctable.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/randtable.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/compress.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/decompress.o" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/bzip2-1.0.8/bzlib.o"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] running: "ar" "s" "/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib/libbz2.a"
+[bzip2-sys 0.1.11+1.0.8] exit status: 0
+[bzip2-sys 0.1.11+1.0.8] cargo:rustc-link-lib=static=bz2
+[bzip2-sys 0.1.11+1.0.8] cargo:rustc-link-search=native=/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/lib
+[bzip2-sys 0.1.11+1.0.8] cargo:root=/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out
+[bzip2-sys 0.1.11+1.0.8] cargo:include=/rustmtcnn/target/debug/build/bzip2-sys-d9aca423a020ba3e/out/include
+[opencv 0.66.0] running: "/usr/local/rustup/toolchains/1.62.0-x86_64-unknown-linux-gnu/bin/cargo" "build" "--release" "--package" "opencv-binding-generator" "--bin" "binding-generator"
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_NO_PKG_CONFIG
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=SYSROOT
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV4_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[opencv 0.66.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_opencv_branch_4
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_PACKAGE_NAME
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_CMAKE_NAME
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_CMAKE_BIN
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_VCPKG_NAME
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_LINK_LIBS
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_LINK_PATHS
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_INCLUDE_PATHS
+[opencv 0.66.0] cargo:rerun-if-env-changed=OPENCV_DISABLE_PROBES
+[opencv 0.66.0] cargo:rerun-if-env-changed=CMAKE_PREFIX_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=OpenCV_DIR
+[opencv 0.66.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[opencv 0.66.0] cargo:rerun-if-env-changed=VCPKG_ROOT
+[opencv 0.66.0] cargo:rerun-if-env-changed=VCPKGRS_DYNAMIC
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-dnn.cpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/bioinspired.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-features2d.cpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/face.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/hdf.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/gapi.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/xfeatures2d.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/ccalib.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/photo.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/videoio.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-core.cpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/alphamat.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/dnn.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/sfm.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/ocvrs_common.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/core.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/aruco.hpp
+[opencv 0.66.0] cargo:rerun-if-changed=Cargo.toml
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=TENSORFLOW_NO_PKG_CONFIG
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64-unknown-linux-gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_x86_64_unknown_linux_gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=TENSORFLOW_STATIC
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=TENSORFLOW_DYNAMIC
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_STATIC
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_ALL_DYNAMIC
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64-unknown-linux-gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH_x86_64_unknown_linux_gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_PATH
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_PATH
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64-unknown-linux-gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR_x86_64_unknown_linux_gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_LIBDIR
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_LIBDIR
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64-unknown-linux-gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR_x86_64_unknown_linux_gnu
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=HOST_PKG_CONFIG_SYSROOT_DIR
+[tensorflow-sys 0.21.0] cargo:rerun-if-env-changed=PKG_CONFIG_SYSROOT_DIR
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:202: binary_url = "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.8.0.tar.gz"
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:206: base_name = "libtensorflow-cpu-linux-x86_64-2.8.0"
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:215: file_name = "/rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0.tar.gz"
+[tensorflow-sys 0.21.0] cargo:rustc-link-lib=dylib=tensorflow_framework
+[tensorflow-sys 0.21.0] cargo:rustc-link-lib=dylib=tensorflow
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow.so.2.8.0 to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow.so.2.8.0...
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow_framework.so.2 to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow_framework.so.2...
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow_framework.so to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow_framework.so...
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow.so.2 to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow.so.2...
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow.so to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow.so...
+[tensorflow-sys 0.21.0] tensorflow-sys/build.rs:271: Copying /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow-cpu-linux-x86_64-2.8.0/lib/libtensorflow_framework.so.2.8.0 to /rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow_framework.so.2.8.0...
+[tensorflow-sys 0.21.0] cargo:rustc-link-search=/rustmtcnn/target/debug/build/tensorflow-sys-bb797a3e664b536c/out
+[opencv 0.66.0] OPT_LEVEL = Some("0")
+[opencv 0.66.0] TARGET = Some("x86_64-unknown-linux-gnu")
+[opencv 0.66.0] HOST = Some("x86_64-unknown-linux-gnu")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] DEBUG = Some("true")
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] CXX_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXX_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXX = None
+[opencv 0.66.0] CXX = None
+[opencv 0.66.0] CXXFLAGS_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXFLAGS_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXFLAGS = None
+[opencv 0.66.0] CXXFLAGS = None
+[opencv 0.66.0] CRATE_CC_NO_DEFAULTS = None
+[opencv 0.66.0] CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_sys
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_types
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_alphamat
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_aruco
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_bgsegm
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_bioinspired
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_calib3d
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_ccalib
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_core
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_dnn
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_dnn_superres
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_dpm
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_face
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_features2d
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_flann
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_freetype
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_fuzzy
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_hdf
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_hfs
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_highgui
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_img_hash
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_imgcodecs
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_imgproc
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_intensity_transform
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_line_descriptor
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_mcc
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_ml
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_objdetect
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_optflow
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_phase_unwrapping
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_photo
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_plot
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_quality
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_rapid
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_rgbd
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_saliency
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_shape
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_stereo
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_stitching
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_structured_light
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_superres
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_surface_matching
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_text
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_tracking
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_video
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_videoio
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_videostab
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_viz
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_ximgproc
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_xobjdetect
+[opencv 0.66.0] cargo:rustc-cfg=ocvrs_has_module_xphoto
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/aruco.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/aruco.cpp"
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bioinspired.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bioinspired.cpp"
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/alphamat.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/alphamat.cpp"
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bgsegm.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bgsegm.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/calib3d.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/calib3d.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ccalib.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ccalib.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/core.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/core.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-core.o" "-c" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-core.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-dnn.o" "-c" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-dnn.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn_superres.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn_superres.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dpm.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dpm.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/face.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/face.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/features2d.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/features2d.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-features2d.o" "-c" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp/manual-features2d.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/flann.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/flann.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/freetype.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/freetype.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/fuzzy.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/fuzzy.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hdf.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hdf.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hfs.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hfs.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/highgui.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/highgui.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/img_hash.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/img_hash.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgcodecs.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgcodecs.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgproc.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgproc.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/intensity_transform.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/intensity_transform.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/line_descriptor.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/line_descriptor.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/mcc.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/mcc.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ml.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ml.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/objdetect.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/objdetect.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/optflow.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/optflow.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/phase_unwrapping.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/phase_unwrapping.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/photo.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/photo.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/plot.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/plot.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/quality.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/quality.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rapid.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rapid.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rgbd.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rgbd.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/saliency.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/saliency.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/shape.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/shape.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stereo.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stereo.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stitching.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stitching.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/structured_light.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/structured_light.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/superres.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/superres.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/surface_matching.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/surface_matching.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/text.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/text.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/tracking.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/tracking.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/video.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/video.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videoio.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videoio.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videostab.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videostab.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/viz.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/viz.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ximgproc.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ximgproc.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xobjdetect.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xobjdetect.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-I" "/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/opencv-0.66.0/src_cpp" "-I" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out" "-I" "." "-I" "/usr/include/opencv4" "-Wall" "-Wextra" "-std=c++11" "-Wno-deprecated-declarations" "-Wno-deprecated-copy" "-Wno-unused-parameter" "-Wno-sign-compare" "-Wno-comment" "-Wno-unused-variable" "-Wno-ignored-qualifiers" "-Wno-return-type-c-linkage" "-o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xphoto.o" "-c" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xphoto.cpp"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] AR_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] AR_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_AR = None
+[opencv 0.66.0] AR = None
+[opencv 0.66.0] running: "ar" "cq" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/libocvrs.a" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/alphamat.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/aruco.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bgsegm.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/bioinspired.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/calib3d.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ccalib.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/core.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-core.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-dnn.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dnn_superres.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/dpm.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/face.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/features2d.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/manual-features2d.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/flann.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/freetype.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/fuzzy.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hdf.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/hfs.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/highgui.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/img_hash.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgcodecs.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/imgproc.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/intensity_transform.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/line_descriptor.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/mcc.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ml.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/objdetect.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/optflow.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/phase_unwrapping.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/photo.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/plot.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/quality.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rapid.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/rgbd.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/saliency.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/shape.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stereo.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/stitching.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/structured_light.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/superres.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/surface_matching.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/text.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/tracking.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/video.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videoio.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/videostab.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/viz.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/ximgproc.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xobjdetect.o" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/xphoto.o"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] running: "ar" "s" "/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out/libocvrs.a"
+[opencv 0.66.0] exit status: 0
+[opencv 0.66.0] cargo:rustc-link-lib=static=ocvrs
+[opencv 0.66.0] cargo:rustc-link-search=native=/rustmtcnn/target/debug/build/opencv-9d5b1593e6797ee7/out
+[opencv 0.66.0] CXXSTDLIB_x86_64-unknown-linux-gnu = None
+[opencv 0.66.0] CXXSTDLIB_x86_64_unknown_linux_gnu = None
+[opencv 0.66.0] HOST_CXXSTDLIB = None
+[opencv 0.66.0] CXXSTDLIB = None
+[opencv 0.66.0] cargo:rustc-link-lib=stdc++
+[opencv 0.66.0] cargo:rustc-link-search=/usr/lib/x86_64-linux-gnu
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_stitching
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_alphamat
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_aruco
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_bgsegm
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_bioinspired
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_ccalib
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_dnn_objdetect
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_dnn_superres
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_dpm
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_face
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_freetype
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_fuzzy
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_hdf
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_hfs
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_img_hash
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_intensity_transform
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_line_descriptor
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_mcc
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_quality
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_rapid
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_reg
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_rgbd
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_saliency
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_shape
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_stereo
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_structured_light
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_phase_unwrapping
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_superres
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_optflow
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_surface_matching
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_tracking
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_highgui
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_datasets
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_text
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_plot
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_ml
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_videostab
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_videoio
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_viz
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_ximgproc
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_video
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_dnn
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_xobjdetect
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_objdetect
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_calib3d
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_imgcodecs
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_features2d
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_flann
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_xphoto
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_photo
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_imgproc
+[opencv 0.66.0] cargo:rustc-link-lib=opencv_core
+--> e09ffb12b73
+STEP 15/24: RUN rm src/*.rs
+--> f539e2cc2ae
+STEP 16/24: COPY ./src ./src
+--> 149765502b0
+STEP 17/24: RUN rm ./target/${TARGET}/deps/rustmtcnn*
+--> 2eb1ba210f4
+STEP 18/24: RUN env RUST_BACKTRACE=full cargo build -vv --profile $PROFILE
+--> 32435503b0d
+STEP 19/24: RUN find . -type f -name libtensorflow.so.2 -exec cp -v {} /usr/lib \;     && find . -type f -name libtensorflow_framework.so.2 -exec cp -v {} /usr/lib \;
+'./target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow.so.2' -> '/usr/lib/libtensorflow.so.2'
+'./target/debug/build/tensorflow-sys-bb797a3e664b536c/out/libtensorflow_framework.so.2' -> '/usr/lib/libtensorflow_framework.so.2'
+--> 71a737ecca0
+STEP 20/24: RUN cp -v "./target/$TARGET/rustmtcnn" /usr/local/bin
+'./target/debug/rustmtcnn' -> '/usr/local/bin/rustmtcnn'
+--> 7d964333cb0
+STEP 21/24: RUN if [ "$TARGET" = "debug" ] ; then apt-get install -y gdb; fi
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  libbabeltrace1 libboost-regex1.74.0 libc6-dbg libdebuginfod1 libipt2
+  libpython3.9 libsource-highlight-common libsource-highlight4v5
+Suggested packages:
+  gdb-doc gdbserver
+The following NEW packages will be installed:
+  gdb libbabeltrace1 libboost-regex1.74.0 libc6-dbg libdebuginfod1 libipt2
+  libpython3.9 libsource-highlight-common libsource-highlight4v5
+0 upgraded, 9 newly installed, 0 to remove and 0 not upgraded.
+Need to get 13.7 MB of archives.
+After this operation, 32.9 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bullseye/main amd64 libbabeltrace1 amd64 1.5.8-1+b3 [174 kB]
+Get:2 http://deb.debian.org/debian bullseye/main amd64 libdebuginfod1 amd64 0.183-1 [27.4 kB]
+Get:3 http://deb.debian.org/debian bullseye/main amd64 libipt2 amd64 2.0.3-1 [43.7 kB]
+Get:4 http://deb.debian.org/debian bullseye/main amd64 libpython3.9 amd64 3.9.2-1 [1691 kB]
+Get:5 http://deb.debian.org/debian bullseye/main amd64 libsource-highlight-common all 3.1.9-3 [79.7 kB]
+Get:6 http://deb.debian.org/debian bullseye/main amd64 libboost-regex1.74.0 amd64 1.74.0-9 [516 kB]
+Get:7 http://deb.debian.org/debian bullseye/main amd64 libsource-highlight4v5 amd64 3.1.9-3+b1 [259 kB]
+Get:8 http://deb.debian.org/debian bullseye/main amd64 gdb amd64 10.1-1.7 [3395 kB]
+Get:9 http://deb.debian.org/debian bullseye/main amd64 libc6-dbg amd64 2.31-13+deb11u3 [7525 kB]
+Fetched 13.7 MB in 4s (3259 kB/s)
+Selecting previously unselected package libbabeltrace1:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 41704 files and directories currently installed.)
+Preparing to unpack .../0-libbabeltrace1_1.5.8-1+b3_amd64.deb ...
+Unpacking libbabeltrace1:amd64 (1.5.8-1+b3) ...
+Selecting previously unselected package libdebuginfod1:amd64.
+Preparing to unpack .../1-libdebuginfod1_0.183-1_amd64.deb ...
+Unpacking libdebuginfod1:amd64 (0.183-1) ...
+Selecting previously unselected package libipt2.
+Preparing to unpack .../2-libipt2_2.0.3-1_amd64.deb ...
+Unpacking libipt2 (2.0.3-1) ...
+Selecting previously unselected package libpython3.9:amd64.
+Preparing to unpack .../3-libpython3.9_3.9.2-1_amd64.deb ...
+Unpacking libpython3.9:amd64 (3.9.2-1) ...
+Selecting previously unselected package libsource-highlight-common.
+Preparing to unpack .../4-libsource-highlight-common_3.1.9-3_all.deb ...
+Unpacking libsource-highlight-common (3.1.9-3) ...
+Selecting previously unselected package libboost-regex1.74.0:amd64.
+Preparing to unpack .../5-libboost-regex1.74.0_1.74.0-9_amd64.deb ...
+Unpacking libboost-regex1.74.0:amd64 (1.74.0-9) ...
+Selecting previously unselected package libsource-highlight4v5.
+Preparing to unpack .../6-libsource-highlight4v5_3.1.9-3+b1_amd64.deb ...
+Unpacking libsource-highlight4v5 (3.1.9-3+b1) ...
+Selecting previously unselected package gdb.
+Preparing to unpack .../7-gdb_10.1-1.7_amd64.deb ...
+Unpacking gdb (10.1-1.7) ...
+Selecting previously unselected package libc6-dbg:amd64.
+Preparing to unpack .../8-libc6-dbg_2.31-13+deb11u3_amd64.deb ...
+Unpacking libc6-dbg:amd64 (2.31-13+deb11u3) ...
+Setting up libdebuginfod1:amd64 (0.183-1) ...
+Setting up libsource-highlight-common (3.1.9-3) ...
+Setting up libc6-dbg:amd64 (2.31-13+deb11u3) ...
+Setting up libpython3.9:amd64 (3.9.2-1) ...
+Setting up libboost-regex1.74.0:amd64 (1.74.0-9) ...
+Setting up libipt2 (2.0.3-1) ...
+Setting up libbabeltrace1:amd64 (1.5.8-1+b3) ...
+Setting up libsource-highlight4v5 (3.1.9-3+b1) ...
+Setting up gdb (10.1-1.7) ...
+Processing triggers for libc-bin (2.31-13+deb11u3) ...
+--> fc055103779
+STEP 22/24: RUN apt-get autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
+Reading package lists...
+Building dependency tree...
+Reading state information...
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+--> 91efb477788
+STEP 23/24: COPY ./rustfest.jpg /tmp/rustfest.jpg
+--> 1c05d19d109
+STEP 24/24: CMD [ "/usr/local/bin/rustmtcnn", "/tmp/rustfest.jpg", "/tmp/test.jpg"]
+COMMIT rustmtcnn
+--> c6d715fdb3b
+Successfully tagged localhost/rustmtcnn:latest
+c6d715fdb3b6874867a2d3188e3ea5ef2c5d7edfb8b1d13117dfe3afd3b5b460
